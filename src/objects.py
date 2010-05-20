@@ -1,3 +1,4 @@
+#! /usr/bin/env python
 # -*- coding: utf-8 -*-
 # Native populous imports
 #from populous import *
@@ -334,8 +335,15 @@ class House(PopObject):
 			self.size = 1
 
 	def findStrength(self):
-		# max 100 (strength depends on available land)
-		strength = populous.random.randint(1, 21)
+		# strength depends on available land max of 25 squares around the house.
+		# if there are 25 squares then the house can become a castle.
+		strength = 1
+		# iter from pos, up to 2 levels
+			# for each pos,
+				# if harvestable by self()
+					# add 1 to strength
+					# mark havestable(self)
+		strength = 9
 		return strength
 
 	def act(self):

@@ -1,0 +1,7 @@
+#! /usr/bin/env python
+# -*- coding: utf-8 -*-
+
+
+__all__ = ["game_tests", "gui_tests", "house_tests", "native_tests",
+           "object_tests", "team_tests", "world_tests"]
+

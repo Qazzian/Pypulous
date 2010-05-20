@@ -28,7 +28,10 @@ NATIVE_DROWN_TIME_SWAMP = 15
 
 INFINIT = 999999
 
-DEBUG = True
+DEBUG = False
+
+def set_debug(level=False):
+	DEBUG = level
 
 class Populous:
 	def __init__ (self):

@@ -1,26 +1,9 @@
 #! /usr/bin/env python
-# -*- coding: utf-8 -*-
 
 import sys, pygame
 import populous
 import objects
 pygame.init()
-
-"""
-Need a number of panes
-
-1. The world view. Interact with the world here. This is the biggest section.
-2. God Controlls.  Buttons for each of the possible actions the Player can make on the world
-	a. Info Panel - Shows info on a selected native. (the shield)
-	b. Miracle commands - These take power to use
-	c. Tribe commands - How the God directs his natives.
-3. Menu bar - basic game functions
-4. Message Bar.
-	a. In Single player show status messages, debug statements etc.
-	b. Multiplayer - can also send and recieve messages from other players
-5. Power bar ???? ?
-"""
-
 
 class Gui():
 	square_size = 30, 30

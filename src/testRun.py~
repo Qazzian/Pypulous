@@ -1,3 +1,4 @@
+#!/usr/bin/python
 # -*- coding: utf-8 -*-
 import populous
 import gui
@@ -34,6 +35,7 @@ def print_grid(land):
 		print '\n',
 
 def main():
+	populous.set_debug(True)
 	clock = pygame.time.Clock()
 	game = test_start()
 	world = game.world
@@ -45,9 +47,12 @@ def main():
 	team1.goal = 'leader'
 	team2.goal = 'leader'
 
-	while True:
+	go_on = True
+
+	while go_on:
 		for event in pygame.event.get():
-			if event.type == pygame.QUIT: sys.exit()
+			if event.type == pygame.QUIT:
+				sys.exit()
 		else:
 			# Deal with the mouse:
 			#mouse_coords = pygame.mouse.get_pos()
@@ -73,6 +78,11 @@ def main():
 				if team2.leader and team2.goal != 'build':
 					team2.goal = 'build'
 				window.draw(time_passed_seconds)
+
+		winner = game.getWinner()
+		if winner:
+			print "\n\nTeam \"%(team)s\" has won!\n\n" % {'team':winner}
+			sys.exit()
 
 if __name__ == '__main__':
 		main()

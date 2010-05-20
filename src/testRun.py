@@ -1,3 +1,4 @@
+#! /usr/bin/env python
 # -*- coding: utf-8 -*-
 import populous
 import gui
@@ -34,6 +35,7 @@ def print_grid(land):
 		print '\n',
 
 def main():
+	populous.set_debug(True)
 	clock = pygame.time.Clock()
 	game = test_start()
 	world = game.world

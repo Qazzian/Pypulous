@@ -30,6 +30,9 @@ INFINIT = 999999
 
 DEBUG = True
 
+def set_debug(level=False):
+	DEBUG = level
+
 class Populous:
 	def __init__ (self):
 		self.update_interval = 25
@@ -413,7 +416,7 @@ class Team:
 			if obj.is_knight:
 				self.knights.pop(id)
 			elif obj.is_leader:
-				self.leader = None
+				self.removeLeader(obj)
 		elif isinstance(obj, House):
 			self.homes.pop(id)
 		obj.team = None
