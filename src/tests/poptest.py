@@ -5,8 +5,6 @@
 
 import unittest
 
-from . import *
-
 import sys
 
 class ProveSuite(unittest.TestSuite):
