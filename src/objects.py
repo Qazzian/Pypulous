@@ -84,7 +84,7 @@ class Native(PopObject):
 		self.in_action = 0     # Number of ticks for action to compleate
 		self.rand = populous.getRandom()
 		self.file_name = "native_%(id)d.png" % {'id': self.team.id}
-		# used with in_action to move the image smoothly between acts
+		# used with in_action to move the image smoothly between actions
 		self.x_dir, self.y_dir = 0, 0
 
 	def __repr__(self):
