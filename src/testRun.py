@@ -7,82 +7,137 @@ import random
 import time
 import sys, pygame
 
+class Game:
 
-def test_start(width=10, height=10):
-	game = populous.Populous()
-	game.world_width = width
-	game.world_height = height
-	game.startGame()
-	return game
+	config = {}
+	pop = None
+	clock = None
+	time_passed = 0
+	total_time_passed = 0
+	total_frames = 0
+	gui = None
+	play = False
 
-def create_objects(game):
-	world = game.world
-	team1 = game.teams[1]
-	team2 = game.teams[2]
-	man1 = populous.Native(world, 0, 1, team1)
-	home1 = populous.House(world, 0, 0, team1)
-	idol1 = populous.Idol(world, 4, 3, team1)
-	# Team 2
-	man2 = populous.Native(world, world.width-1, world.height-2, team2)
-	home2 = populous.House(world, world.width-1, world.height-1, team2)
-	idol2 = populous.Idol(world, world.width-5, world.height-3, team2)
-	return (man1, home1, idol1) , (man2, home2, idol2)
+	def __init__(self):
+		self.loadConfig()
+		self.init_game()
+		self.clock = pygame.time.Clock()
+		self.gui = gui.Gui(self.pop)
+		self.populate_world()
 
-def print_grid(land):
-	for x in land.grid:
-		for y in x:
-			print y.objects,
-		print '\n',
+	def loadConfig(self):
+		self.config = {
+			'width': 6,
+			'height': 6,
+			'teams': 2
+			}
+
+	def init_game(self, width=None, height=None):
+		self.pop = populous.Populous()
+		self.pop.world_width = width or self.config['width']
+		self.pop.world_height = height or self.config['height']
+		self.pop.startGame()
+		return self.pop
+
+	def populate_world(self):
+		game = self.pop
+		world = self.pop.world
+		team1 = self.pop.teams[1]
+		team2 = self.pop.teams[2]
+		man1 = populous.Native(world, 0, 1, team1)
+		home1 = populous.House(world, 0, 0, team1)
+		idol1 = populous.Idol(world, 4, 3, team1)
+		# Team 2
+		man2 = populous.Native(world, world.width-1, world.height-2, team2)
+		home2 = populous.House(world, world.width-1, world.height-1, team2)
+		idol2 = populous.Idol(world, world.width-5, world.height-3, team2)
+		return (man1, home1, idol1) , (man2, home2, idol2)
+
+	def print_grid(self):
+		land = self.pop.world
+		for x in land.grid:
+			for y in x:
+				print y.objects,
+			print '\n',
+
+	def start(self):
+		self.play = True;
+		self.loop()
+		self.end()
+
+	def loop(self):
+		while self.play:
+			self.processEvents()
+			self.tick()
+			self.processWorld()
+			self.processObjects()
+			self.checkState()
+			self.processGUI()
+
+	def processEvents(self):
+		for event in pygame.event.get():
+				if event.type == pygame.QUIT:
+					self.end()
+
+	def processMouseEvents(self):
+		# Deal with the mouse:
+		#mouse_coords = pygame.mouse.get_pos()
+		#print mouse_coords
+		#game_coords = game.mouseToGameCoords(mouse_coords[0], mouse_coords[1])
+		#print game_coords
+		#print world.inspectPos(game_coords[0], game_coords[1])
+		pass
+
+	def tick(self):
+		time_passed = self.clock.tick(40)
+		self.time_passed = time_passed / 1000.0
+		self.total_time_passed += self.time_passed
+		self.total_frames += 1
+		print "Clock Tick: ",time_passed,"ms, ",self.time_passed,"s"
+		print "FPS: ", (self.total_frames / self.total_time_passed)
+
+	def processWorld(self):
+		for t in self.pop.teams:
+			if t.id > 0:
+				t.checkHasLost()
+				t.checkTeamGoal()
+
+	def processObjects(self):
+		world = self.pop.world
+		for i in world.objects.keys():
+			try:
+				world.objects[i]
+			except KeyError:
+				pass
+			else:
+				try:
+					world.objects[i].act()
+				except Exception as ex:
+					print "Fatal Error: %(error)s" % { 'error': ex}
+					print world.objects[i]
+					self.play = False
+
+	def checkState(self):
+		winner = self.pop.getWinner()
+		print "have winner : ", ((winner and 'true') or 'false')
+		if winner:
+			self.play = false;
+		pass
+
+	def processGUI(self):
+		self.gui.draw(self.time_passed)
+
+	def end(self):
+		print "\n\n\t\tGAME OVER\n\n"
+		print "\n\nTeam \"%(team)s\" has won!\n\n" % {'team':winner}
+
+
 
 def main():
 	populous.set_debug(True)
-	clock = pygame.time.Clock()
-	game = test_start()
-	world = game.world
-	window = gui.Gui(game)
-	team1 = game.teams[1]
-	team2 = game.teams[2]
-	create_objects(game)
-	print_grid(world)
-	team1.goal = 'leader'
-	team2.goal = 'leader'
-
-	go_on = True
-
-	while go_on:
-		for event in pygame.event.get():
-			if event.type == pygame.QUIT:
-				sys.exit()
-		else:
-			# Deal with the mouse:
-			#mouse_coords = pygame.mouse.get_pos()
-			#print mouse_coords
-			#game_coords = game.mouseToGameCoords(mouse_coords[0], mouse_coords[1])
-			#print game_coords
-			#print world.inspectPos(game_coords[0], game_coords[1])
-
-			time_passed = clock.tick(40)
-			time_passed_seconds = time_passed / 1000.0
-			for i in world.objects.keys():
-				try:
-					world.objects[i]
-				except KeyError:
-					pass
-				else:
-					try:
-						world.objects[i].act()
-					except Exception as ex:
-						print "Fatel Error: %(error)s" % { 'error': ex}
-				if team1.leader and team1.goal != 'build':
-					team1.goal = 'build'
-				if team2.leader and team2.goal != 'build':
-					team2.goal = 'build'
-				window.draw(time_passed_seconds)
-
-		winner = game.getWinner()
-		if winner:
-			print "\n\nTeam \"%(team)s\" has won!\n\n" % {'team':winner}
-			sys.exit()
+	game = Game()
+	game.start()
+	sys.exit()
 
 if __name__ == '__main__':
 		main()

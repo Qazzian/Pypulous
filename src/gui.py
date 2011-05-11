@@ -10,15 +10,16 @@ pygame.init()
 Need a number of panes
 
 1. The world view. Interact with the world here. This is the biggest section.
-2. God Controlls.  Buttons for each of the possible actions the Player can make on the world
+2. God Controls.  Buttons for each of the possible actions the Player can make on the world
 	a. Info Panel - Shows info on a selected native. (the shield)
 	b. Miracle commands - These take power to use
 	c. Tribe commands - How the God directs his natives.
 3. Menu bar - basic game functions
 4. Message Bar.
 	a. In Single player show status messages, debug statements etc.
-	b. Multiplayer - can also send and recieve messages from other players
+	b. Multi-player - can also send and receive messages from other players
 5. Power bar ???? ?
+6. Debug stats
 """
 
 
@@ -37,8 +38,9 @@ class Gui():
 		self.size = self.square_size[0] * self.game_size[0], self.square_size[1] * self.game_size[1]
 		self.screen = pygame.display.set_mode(self.size)
 		self.cache = []
+		self.teams = []
 		for i in range(self.game.team_count + 1):
-			self.game.teams.append(dict())
+			self.teams.append(dict())
 
 	def draw(self, seconds_passed=0):
 		self.screen.fill(Gui.black)
