@@ -46,6 +46,8 @@ class Gui():
 		self.screen.fill(Gui.black)
 		for i in self.world.objects:
 			obj = self.world.objects[i]
+			if (not obj.is_alive):
+				continue
 			image = self.getImage(obj)
 			rect = image.get_rect()
 			rect.left = obj.x * Gui.square_size[0]

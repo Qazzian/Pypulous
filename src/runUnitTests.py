@@ -8,6 +8,9 @@ import lib
 import lib.t
 import lib.t.runtests
 
+def runSingle(test_name):
+	pass
+
 def runAllTests():
 	runner = tests.poptest.SuiteRunner()
 	addAllSuites(runner)
@@ -24,7 +27,10 @@ def addAllSuites(runner):
 	lib.t.runtests.addAllSuites(runner, suiteClass=tests.poptest.ProveSuite)
 
 
-
 if __name__ == '__main__':
-	runAllTests()
-	#lib.t.runtests.runAllTests()
+	import sys
+	arg = sys.argv[1]
+	if arg:
+		runSingle(arg)
+	else:
+		runAllTests()

@@ -41,10 +41,9 @@ class PopObject:
 
 	def die(self, cause=None):
 		self.is_alive = False
-		self.killed_by = cause
+		self.killed_by = cause or self.state
 		self.state = 'dead'
 		populous.log(( self, "killed by ", cause))
-		self.world.kill(self)
 
 	def isEnemy(self, other):
 		if isinstance(other, PopObject):
@@ -54,7 +53,7 @@ class PopObject:
 		return False
 
 	def __repr__(self):
-		s = "<%(type)s id: %(id)d >" % {'type':self.__class__, 'id': self.id }
+		s = "<%(type)s id: %(id)d Team: %(team)d>" % {'type':self.__class__, 'id': self.id, 'team':self.team.id }
 		return s
 
 # somehow bestowes leadership
@@ -88,7 +87,7 @@ class Native(PopObject):
 		self.x_dir, self.y_dir = 0, 0
 
 	def __repr__(self):
-		s = "<%(type)s id: %(id)d %(team)d %(leader)s %(knight)s>" % {
+		s = "<%(type)s id: %(id)d T:%(team)d L:%(leader)s K:%(knight)s>" % {
 					'type':'Native', 'id': self.id , 'team': self.team.id,
 					'leader':(self.is_leader and 'L' or '-'), 'knight':(self.is_knight and 'K' or '-')}
 		return s
@@ -427,7 +426,7 @@ class House(PopObject):
 				self.team.setLeader(self)
 
 	def __repr__(self):
-		s = "<%(type)s id: %(id)d H:%(health)d S:%(strength)d G:%(growth)d>" % {
+		s = "<%(type)s id:%(id)d H:%(health)d S:%(strength)d G:%(growth)d>" % {
 		        'type':'HOUSE', 'id': self.id, 'health':self.health,
 						'strength':self.strength, 'growth':self.growth }
 		return s

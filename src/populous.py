@@ -29,7 +29,7 @@ NATIVE_DROWN_TIME_SWAMP = 15
 
 INFINIT = 999999
 
-DEBUG = False
+DEBUG = True
 
 def set_debug(level=False):
 	DEBUG = level
@@ -115,7 +115,7 @@ class GridSqr:
 	def remove(self, obj):
 		# TODO: fix me.
 		removed_obj = self.objects.pop(obj.id)
-		populous.log(( "removed", removed_obj, "From %d,%d" % (self.x, self.y)))
+		populous.log(( "removed", removed_obj, "From Grid %d,%d" % (self.x, self.y)))
 		populous.log("Now has objects: ", self.inspect())
 		return removed_obj
 
@@ -176,6 +176,13 @@ class World:
 			for y in x:
 				print y.objects,
 			print '\n',
+
+	def checkObjects(self):
+		print self.objects
+		for i, o in dict(self.objects).iteritems():
+			if not o.is_alive:
+				self.removeObject(o)
+		pass
 
 	def addObject(self, obj):
 		if isinstance(obj, PopObject):
@@ -268,6 +275,8 @@ class World:
 			return obj
 
 	def kill(self, obj):
+		if obj.is_alive:
+			return obj.die()
 		removed_obj = self.removeObject(obj)
 		self.dead_objects[removed_obj.id ] = (removed_obj)
 		if not removed_obj.killed_by:

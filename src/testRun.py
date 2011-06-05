@@ -17,6 +17,7 @@ class Game:
 	total_frames = 0
 	gui = None
 	play = False
+	winner = None
 
 	def __init__(self):
 		self.loadConfig()
@@ -27,8 +28,8 @@ class Game:
 
 	def loadConfig(self):
 		self.config = {
-			'width': 6,
-			'height': 6,
+			'width': 3,
+			'height': 3,
 			'teams': 2
 			}
 
@@ -37,9 +38,11 @@ class Game:
 		self.pop.world_width = width or self.config['width']
 		self.pop.world_height = height or self.config['height']
 		self.pop.startGame()
+		self.world = self.pop.world
 		return self.pop
 
 	def populate_world(self):
+		return self._do_tiny_world()
 		game = self.pop
 		world = self.pop.world
 		team1 = self.pop.teams[1]
@@ -52,6 +55,21 @@ class Game:
 		home2 = populous.House(world, world.width-1, world.height-1, team2)
 		idol2 = populous.Idol(world, world.width-5, world.height-3, team2)
 		return (man1, home1, idol1) , (man2, home2, idol2)
+
+	def _do_tiny_world(self):
+		game = self.pop
+		world = self.pop.world
+		team1 = self.pop.teams[1]
+		team2 = self.pop.teams[2]
+		man1 = populous.Native(world, 1, 0, team1)
+		home1 = populous.House(world, 0, 0, team1)
+		idol1 = populous.Idol(world, 2, 0, team1)
+		# Team 2
+		man2 = populous.Native(world, 1, 2, team2)
+		home2 = populous.House(world, 0, 2, team2)
+		idol2 = populous.Idol(world, 2, 2, team2)
+		return (man1, home1, idol1) , (man2, home2, idol2)
+
 
 	def print_grid(self):
 		land = self.pop.world
@@ -97,6 +115,7 @@ class Game:
 		print "FPS: ", (self.total_frames / self.total_time_passed)
 
 	def processWorld(self):
+		self.world.checkObjects()
 		for t in self.pop.teams:
 			if t.id > 0:
 				t.checkHasLost()
@@ -108,28 +127,34 @@ class Game:
 			try:
 				world.objects[i]
 			except KeyError:
-				pass
+				print "Key error encountered in processObjects. Index: ",i
 			else:
 				try:
 					world.objects[i].act()
 				except Exception as ex:
-					print "Fatal Error: %(error)s" % { 'error': ex}
-					print world.objects[i]
+					print "<<< Fatal Error: %(error)s >>>" % { 'error': ex}
+					print "Object index:",i
 					self.play = False
 
 	def checkState(self):
 		winner = self.pop.getWinner()
 		print "have winner : ", ((winner and 'true') or 'false')
 		if winner:
+			self.winner = winner
 			self.play = false;
-		pass
 
 	def processGUI(self):
 		self.gui.draw(self.time_passed)
 
 	def end(self):
 		print "\n\n\t\tGAME OVER\n\n"
-		print "\n\nTeam \"%(team)s\" has won!\n\n" % {'team':winner}
+		print "\n\nTeam \"%(team)s\" has won!\n\n" % {'team':self.winner}
+		if self.winner == None:
+			for t in self.pop.teams:
+				populous.log(t, "Has: ")
+				for i, o in t.objects.iteritems():
+					str = "%s %s" % (o, (o.is_alive and 'alive') or 'dead')# TODO
+					populous.log(str)
 
 
 

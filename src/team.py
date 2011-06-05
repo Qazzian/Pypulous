@@ -39,9 +39,15 @@ class Team:
 		s = "<Team %(id)d >" % {'id': self.id }
 		return s
 
+	def checkState(self):
+		self.checkObjects()
+		self.checkHasLost()
+
+
 	def checkHasLost(self):
 		print self, "Object count: ", len(self.objects)
 		# TODO there are objects not being cleared up.
+		return len(self.objects) > 0
 
 	def checkTeamGoal(self):
 		if (self.leader):
@@ -66,14 +72,17 @@ class Team:
 		return
 
 	def removeObject(self, id):
+		populous.log(self, "is Removing ",id)
 		obj = self.objects.pop(id)
 		if isinstance(obj, Native):
+			populous.log("Removing a native")
 			self.natives.pop(id)
 			if obj.is_knight:
 				self.knights.pop(id)
 			elif obj.is_leader:
 				self.removeLeader(obj)
 		elif isinstance(obj, House):
+			populous.log("Removing a house")
 			self.homes.pop(id)
 		obj.team = None
 
