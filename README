@@ -1,11 +1,21 @@
----+ Pypulous
+# Pypulous
 
 A recreation of the original Populous in Python
 
 Still in it's very early stages.
 
+## Dependancies
 
----++ What works:
+Get the latest Python implimentation for you environment
+   
+    http://www.python.org/download/
+
+Get the corrisponding pygame package
+
+    http://pygame.org/download.shtml
+
+
+## What works:
 
    * Creates a simple world with 2 tribes.
    * The people in the tribes can
@@ -18,7 +28,7 @@ Still in it's very early stages.
       * start a new game
 	    * end the game
 
----++ TODO
+## TODO
    * create a landscape
 	    * concept of land & water
 			* height map
