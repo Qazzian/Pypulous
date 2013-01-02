@@ -10,7 +10,7 @@ Get the latest Python implimentation for you environment
    
     http://www.python.org/download/
 
-Get the corrisponding pygame package
+Get the corresponding pygame package
 
     http://pygame.org/download.shtml
 
