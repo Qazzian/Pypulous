@@ -75,8 +75,8 @@ class Game:
 		land = self.pop.world
 		for x in land.grid:
 			for y in x:
-				print y.objects,
-			print '\n',
+				print(y.objects),
+			print('\n'),
 
 	def start(self):
 		self.play = True;
@@ -111,8 +111,8 @@ class Game:
 		self.time_passed = time_passed / 1000.0
 		self.total_time_passed += self.time_passed
 		self.total_frames += 1
-		print "Clock Tick: ",time_passed,"ms, ",self.time_passed,"s"
-		print "FPS: ", (self.total_frames / self.total_time_passed)
+		print( "Clock Tick: ",time_passed,"ms, ",self.time_passed,"s")
+		print( "FPS: ", (self.total_frames / self.total_time_passed))
 
 	def processWorld(self):
 		self.world.checkObjects()
@@ -127,18 +127,18 @@ class Game:
 			try:
 				world.objects[i]
 			except KeyError:
-				print "Key error encountered in processObjects. Index: ",i
+				print ("Key error encountered in processObjects. Index: ",i)
 			else:
 				try:
 					world.objects[i].act()
 				except Exception as ex:
-					print "<<< Fatal Error: %(error)s >>>" % { 'error': ex}
-					print "Object index:",i
+					print ("<<< Fatal Error: %(error)s >>>" % { 'error': ex})
+					print ("Object index:",i)
 					self.play = False
 
 	def checkState(self):
 		winner = self.pop.getWinner()
-		print "have winner : ", ((winner and 'true') or 'false')
+		print ("have winner : ", ((winner and 'true') or 'false'))
 		if winner:
 			self.winner = winner
 			self.play = false;
@@ -147,12 +147,12 @@ class Game:
 		self.gui.draw(self.time_passed)
 
 	def end(self):
-		print "\n\n\t\tGAME OVER\n\n"
-		print "\n\nTeam \"%(team)s\" has won!\n\n" % {'team':self.winner}
+		print ("\n\n\t\tGAME OVER\n\n")
+		print( "\n\nTeam \"%(team)s\" has won!\n\n" % {'team':self.winner})
 		if self.winner == None:
 			for t in self.pop.teams:
 				populous.log(t, "Has: ")
-				for i, o in t.objects.iteritems():
+				for i, o in t.objects.items():
 					str = "%s %s" % (o, (o.is_alive and 'alive') or 'dead')# TODO
 					populous.log(str)
 

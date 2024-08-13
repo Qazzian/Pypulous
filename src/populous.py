@@ -9,9 +9,8 @@
 from objects import *
 from team import *
 
-# Externl modules
+# External modules
 import random
-import Queue
 import math
 
 # Define some constants:
@@ -105,12 +104,12 @@ class GridSqr:
 		if isinstance(obj, PopObject):
 			if isinstance(obj, House):
 				if self.hasHouse():
-					raise Exception, "Position already has a house! %(self)s" % {'self':self}
+					raise Exception("Position already has a house! %(self)s" % {'self':self})
 				self.builders = dict() # clear list of builders.
 			self.objects[obj.id] = obj
 		else:
 			s = "Object %(type)s is not a subclass of PopObject " % {'type':obj.__class__}
-			raise TypeError, s
+			raise TypeError(s)
 
 	def remove(self, obj):
 		# TODO: fix me.
@@ -174,12 +173,12 @@ class World:
 	def printGrid(self):
 		for x in self.grid:
 			for y in x:
-				print y.objects,
-			print '\n',
+				print( y.objects),
+			print ('\n'),
 
 	def checkObjects(self):
-		print self.objects
-		for i, o in dict(self.objects).iteritems():
+		print (self.objects)
+		for i, o in dict(self.objects).items():
 			if not o.is_alive:
 				self.removeObject(o)
 		pass
@@ -268,7 +267,7 @@ class World:
 			populous.log(( "Error Removing object %(id)d" % {'id': id}))
 			populous.log(( "\nObject List\n", self.objects, "\n\nGrid State\n"))
 			self.printGrid()
-			raise KeyError
+			raise KeyError()
 		else:
 			(x, y) = (obj.x, obj.y)
 			self.grid[y][x].remove(obj)
@@ -405,7 +404,7 @@ def getRandomPercent():
 
 def log(msg, *args):
 	if DEBUG:
-		print msg
+		print (msg)
 		for i in args:
-			print i
+			print (i)
 	pass

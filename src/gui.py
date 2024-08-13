@@ -58,7 +58,7 @@ class Gui():
 	def getImage(self, obj):
 		team_no = obj.team.id
 		obj_type = type(obj)
-		data_dir = '../images/'
+		data_dir = 'images/'
 		full_path = data_dir + obj.file_name
 		if not full_path:
 			raise Exception('Cannot find image name')

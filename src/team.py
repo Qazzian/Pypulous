@@ -1,9 +1,8 @@
 # Native populous imports
 from objects import *
 
-# Externl modules
+# External modules
 import random
-import Queue
 import math
 
 
@@ -45,7 +44,7 @@ class Team:
 
 
 	def checkHasLost(self):
-		print self, "Object count: ", len(self.objects)
+		print (self, "Object count: ", len(self.objects))
 		# TODO there are objects not being cleared up.
 		return len(self.objects) > 0
 
