@@ -1,7 +1,9 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import os
 import sys, pygame
+from pathlib import Path
 import populous
 import objects
 pygame.init()
@@ -56,10 +58,8 @@ class Gui():
 		pygame.display.flip()
 
 	def getImage(self, obj):
-		team_no = obj.team.id
-		obj_type = type(obj)
-		data_dir = 'images/'
-		full_path = data_dir + obj.file_name
+		runPath = os.path.realpath(__file__)
+		full_path = os.path.join('images', obj.file_name)
 		if not full_path:
 			raise Exception('Cannot find image name')
 		image = pygame.image.load(full_path)

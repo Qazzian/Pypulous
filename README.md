@@ -14,6 +14,15 @@ Get the corresponding pygame package
 
     http://pygame.org/download.shtml
 
+## Run
+
+From the project root
+
+`python ./src/testRun.py`
+
+This will run a test window with one house, person, and idol for each team. The people will attack each other and then the game will end when one dies.
+
+Note that running the script from another directory will cause problems loading the images.
 
 ## What works:
 
