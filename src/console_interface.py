@@ -46,16 +46,16 @@ class Menu():
 		self.menu_entries = menu_entries
 
 	def printMenu(self):
-		print self.name
+		print (self.name)
 		for i, v in enumerate(self.menu_entries):
 			# py <= 2.5
-			print "%(index)3d. %(name)s" % { 'index':i, 'name':v['name'] }
+			print ("%(index)3d. %(name)s" % { 'index':i, 'name':v['name'] })
 			# py >= 2.6
 			#print "{0:3}. {1}".format(i, v['name])
 
 	def getInput(self):
 		try:
-			user_choice = int(raw_input(self.prompt))
+			user_choice = int(input(self.prompt))
 		except ValueError:
 			user_choice = len(self.menu_entries)
 		except KeyboardInterrupt:
@@ -69,7 +69,7 @@ class Menu():
 
 	def printErrorMessage(self):
 		if self.error_message:
-			print self.error_message
+			print( self.error_message)
 			self.error_message = ''
 
 	def setError(self, error):
@@ -91,7 +91,7 @@ class UIThread (Thread):
 			self.ui.getCommand()
 			sleep(self.delay)
 		if __name__ == '__main__':
-			print 'Exiting ui thread'
+			print ('Exiting ui thread')
 
 	def exit(self):
 		self.die = True
@@ -109,9 +109,9 @@ if __name__ == '__main__':
 				try:
 					command = self.cq.get()
 					self.cq.task_done()
-					print command
+					print( command)
 				except Queue.Empty:
-					print 'Nothing to do.'
+					print ('Nothing to do.')
 				else:
 					if command == 'quit':
 						self.exit()

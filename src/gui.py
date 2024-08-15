@@ -88,5 +88,5 @@ if __name__ == '__main__':
 	world.printGrid()
 	window = Gui(world)
 	window.draw()
-	raw_input("Any key to quit.")
+	input("Any key to quit.")
 
