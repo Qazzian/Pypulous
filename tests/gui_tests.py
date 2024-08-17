@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 
-import poptest
+import tests.poptest
 
 import sys, pygame
 import unittest

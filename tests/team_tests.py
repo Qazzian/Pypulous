@@ -3,7 +3,7 @@
 
 # test.object_tests.py
 
-import poptest
+import tests.poptest
 
 import unittest
 import random

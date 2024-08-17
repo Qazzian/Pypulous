@@ -107,7 +107,7 @@ class Game:
 		pass
 
 	def tick(self):
-		time_passed = self.clock.tick(40)
+		time_passed = self.clock.tick(1)
 		self.time_passed = time_passed / 1000.0
 		self.total_time_passed += self.time_passed
 		self.total_frames += 1
@@ -141,7 +141,7 @@ class Game:
 		print ("have winner : ", ((winner and 'true') or 'false'))
 		if winner:
 			self.winner = winner
-			self.play = false;
+			self.play = False;
 
 	def processGUI(self):
 		self.gui.draw(self.time_passed)
@@ -159,7 +159,6 @@ class Game:
 
 
 def main():
-	populous.set_debug(True)
 	game = Game()
 	game.start()
 	sys.exit()

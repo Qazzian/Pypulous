@@ -3,14 +3,17 @@
 
 # test.object_tests.py
 
-import poptest
+import tests.poptest
 
 import unittest
 import random
 import time
 
-import populous
-import objects
+from pypulous import Native
+from pypulous.populous import Populous
+from pypulous.Buildings import House
+
+from pypulous.objects import PopObject, Idol
 
 ##########
 # Native #
@@ -18,13 +21,13 @@ import objects
 
 class NativeTest(unittest.TestCase):
 	def setUp(self):
-		self.game = populous.Populous()
+		self.game = Populous()
 		self.game.startGame()
 		self.world = self.game.world
 		self.teams = self.game.teams
 
 	def testNew(self):
-		man = populous.Native(self.world, team=self.teams[1])
+		man = Native(self.world, team=self.teams[1])
 		self.assertTrue(man)
 		self.assertEqual((man.x, man.y, man.strength, man.health), (0, 0, 1, 100))
 
@@ -32,13 +35,13 @@ class NativeTest(unittest.TestCase):
 		world = self.world
 		team1 = self.teams[1]
 		team2 = self.teams[2]
-		man1 = populous.Native(world, 0, 1, team1)
-		home1 = populous.House(world, 0, 0, team1)
-		idol1 = populous.Idol(world, 4, 3, team1)
+		man1 = Native(world, 0, 1, team1)
+		home1 = House(world, 0, 0, team1)
+		idol1 = Idol(world, 4, 3, team1)
 		# Team 2
-		man2 = populous.Native(world, world.width-1, world.height-2, team2)
-		home2 = populous.House(world, world.width-1, world.height-1, team2)
-		idol2 = populous.Idol(world, world.width-5, world.height-3, team2)
+		man2 = Native(world, world.width-1, world.height-2, team2)
+		home2 = House(world, world.width-1, world.height-1, team2)
+		idol2 = Idol(world, world.width-5, world.height-3, team2)
 		return (man1, home1, idol1) , (man2, home2, idol2)
 
 	def testFindNearestEnemy(self):
@@ -66,8 +69,8 @@ class NativeTest(unittest.TestCase):
 
 	"""
 	def testDecideGoal(self):
-		house = populous.House(self.world, self.game.world_width -2, self.game.world_height -2, self.teams[2])
-		man = populous.Native(self.world, self.game.world_width-1, self.game.world_height-1, self.teams[1])
+		house = House(self.world, self.game.world_width -2, self.game.world_height -2, self.teams[2])
+		man = Native(self.world, self.game.world_width-1, self.game.world_height-1, self.teams[1])
 		goal = man.decideOwnGoal()
 		self.assertTrue(goal, "Native can't decide what to do")
 		self.assertEqual(goal, house, "Native found unexpected goal.")

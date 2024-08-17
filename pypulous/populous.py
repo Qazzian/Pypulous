@@ -6,11 +6,14 @@
 # dictionaries of PopObject's should use the object id as the key name
 
 # Native populous imports
-from objects import *
-from team import *
+from pypulous.objects import *
+from pypulous.team import *
+from pypulous.Native import Native
+from pypulous.Buildings import House
+from pypulous.lib.random import getRandom
+from pypulous.lib.logger import log
 
 # External modules
-import random
 import math
 
 # Define some constants:
@@ -27,11 +30,6 @@ NATIVE_DROWN_TIME_WATER = 15
 NATIVE_DROWN_TIME_SWAMP = 15
 
 INFINIT = 999999
-
-DEBUG = True
-
-def set_debug(level=False):
-	DEBUG = level
 
 class Populous:
 	def __init__ (self):
@@ -342,7 +340,7 @@ class IterFromPoint:
 		self.current_radius = 0
 		self.x = self.x_min = self.x_max = source.x
 		self.y = self.y_min = self.y_max = source.y
-		rand_index = populous.getRandom().randint(0, len(self.direction_masks) -1)
+		rand_index = getRandom().randint(0, len(self.direction_masks) -1)
 		self.start_direction = self.direction_masks[rand_index]
 		self.current_radius_start_pos = [self.x, self.y]
 		#print "\n\nStart direction: ", self.start_direction, " Start location: ",self.x,',',self.y
@@ -389,22 +387,3 @@ class IterFromPoint:
 
 	def __iter__(self):
 		return self
-
-#################
-# Utility methods
-#################
-
-def getRandom():
-	rand = random.Random()
-	rand.seed = 10
-	return rand
-
-def getRandomPercent():
-	return getRandom().randint(0, 100)
-
-def log(msg, *args):
-	if DEBUG:
-		print (msg)
-		for i in args:
-			print (i)
-	pass

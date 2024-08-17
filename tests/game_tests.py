@@ -3,14 +3,13 @@
 
 # test.poptest.py
 
-import poptest
+import tests.poptest
 
 import unittest
 import random
 import time
 
-import populous
-import gui
+from pypulous import populous
 
 ############
 # Populous #

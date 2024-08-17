@@ -3,13 +3,13 @@
 
 # test.object_tests.py
 
-import poptest
+from tests.poptest import ProveSuite
 
 import unittest
 import random
 import time
 
-import populous
+import pypulous.populous
 
 
 #########
@@ -21,21 +21,21 @@ class WorldTests(unittest.TestCase):
 		self.world_width = 15
 		self.world_height = 10
 		self.random = random.Random()
-		self.team = populous.Team()
+		self.team = pypulous.populous.Team()
 		pass
 
 	def tearDown(self):
 		pass
 
 	def testNew(self):
-		world = populous.World(width=self.world_width, height=self.world_height)
+		world = pypulous.populous.World(width=self.world_width, height=self.world_height)
 		self.assertEqual((self.world_width, self.world_height), (world.width, world.height))
 		grid_y = len(world.grid)
 		grid_x = len(world.grid[0])
 		self.assertEqual((self.world_width, self.world_height), (grid_x, grid_y ))
 
 	def testGetPos(self):
-		world = populous.World(width=self.world_width, height=self.world_height)
+		world = pypulous.populous.World(width=self.world_width, height=self.world_height)
 		for i in range(self.random.randint(0, self.world_width)):
 			rand_x = self.random.randint(0, self.world_width-1)
 			rand_y = self.random.randint(0, self.world_height-1)
@@ -50,7 +50,7 @@ class WorldTests(unittest.TestCase):
 		self.assertEqual(pos2, None)
 
 	def testGetAjoiningPos(self):
-		world = populous.World(width=self.world_width, height=self.world_height)
+		world = pypulous.populous.World(width=self.world_width, height=self.world_height)
 		posList = world.getAjoiningPos(0, 0) # Test the corner
 		self.assertEqual(len(posList), 3)
 		posList = world.getAjoiningPos(1, 1) # middle
@@ -75,10 +75,10 @@ class WorldTests(unittest.TestCase):
 
 	# TODO: Try with a range of objects and distances.
 	def testClosest(self):
-		world = populous.World(width=self.world_width, height=self.world_height)
-		source = populous.PopObject(x=3, y=3, world=world, team=self.team)
-		a = populous.PopObject(x=2, y=-2, world=world, team=self.team)
-		b = populous.PopObject(x=1, y=1, world=world, team=self.team)
+		world = pypulous.populous.World(width=self.world_width, height=self.world_height)
+		source = pypulous.populous.PopObject(x=3, y=3, world=world, team=self.team)
+		a = pypulous.populous.PopObject(x=2, y=-2, world=world, team=self.team)
+		b = pypulous.populous.PopObject(x=1, y=1, world=world, team=self.team)
 		result = world.closest(source, a, b)
 		self.assertTrue(result, "World.closest returned nothing.")
 		self.assertEqual((result.x, result.y), (2, -2), "World.closest returned incorrect result.")
@@ -93,7 +93,7 @@ class WorldTests(unittest.TestCase):
 
 class IterFromPosTest(unittest.TestCase):
 	def setUp(self):
-		self.game = populous.Populous()
+		self.game = pypulous.populous.Populous()
 		self.game.world_width = 10
 		self.game.world_height = 10
 		self.game.startGame()
@@ -102,7 +102,7 @@ class IterFromPosTest(unittest.TestCase):
 
 	def doLoop(self, source, limit=None):
 		count = 0
-		for p in populous.IterFromPoint(source, self.world, limit):
+		for p in pypulous.populous.IterFromPoint(source, self.world, limit):
 			self.assertTrue(p)
 			# print p.x, p.y
 			count += 1
@@ -152,7 +152,7 @@ class IterFromPosTest(unittest.TestCase):
 
 class IterGridTests(unittest.TestCase):
 	def setUp(self):
-		self.game = populous.Populous()
+		self.game = pypulous.populous.Populous()
 		self.game.world_width = 10
 		self.game.world_height = 10
 		self.game.startGame()
@@ -160,7 +160,7 @@ class IterGridTests(unittest.TestCase):
 		self.teams = self.game.teams
 
 	def testNew(self):
-		my_iter = populous.IterGrid(self.world)
+		my_iter = pypulous.populous.IterGrid(self.world)
 		count = 0
 		self.assertTrue(my_iter, "Cannot make IterGrid object.")
 		#print dir(my_iter)
@@ -171,9 +171,9 @@ class IterGridTests(unittest.TestCase):
 
 
 def getAllTests(suiteClass=unittest.TestSuite):
-	suite = poptest.ProveSuite()
+	suite = ProveSuite()
 	suite.setShortDescription("WorldTests")
-	suite.addTest(unittest.makeSuite(WorldTests, suiteClass=suiteClass))
-	suite.addTest(unittest.makeSuite(IterFromPosTest, suiteClass=suiteClass))
-	suite.addTest(unittest.makeSuite(IterGridTests, suiteClass=suiteClass))
+	suite.addTest(unittest.TestLoader().loadTestsFromTestCase(WorldTests))
+	suite.addTest(unittest.TestLoader().loadTestsFromTestCase(IterFromPosTest))
+	suite.addTest(unittest.TestLoader().loadTestsFromTestCase(IterGridTests))
 	return suite
