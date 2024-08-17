@@ -7,6 +7,7 @@
 import unittest
 
 from pypulous.populous import Populous
+from pypulous.Native import Native
 from pypulous.Buildings import House
 
 #########
@@ -54,7 +55,7 @@ class HouseTest(unittest.TestCase):
 
 	def testFight(self):
 		house = House(self.world, team=self.teams[0])
-		foe = populous.Native(self.world, house.x, house.y, self.teams[0])
+		foe = Native(self.world, house.x, house.y, self.teams[0])
 		#print house.strength, house.health, foe.strength, foe.health
 		house.defend(foe, 10)
 		#print foe.health, house.health

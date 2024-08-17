@@ -1,5 +1,5 @@
 # Native populous imports
-from pypulous.objects import *
+from objects import *
 
 # External modules
 import random

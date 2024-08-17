@@ -1,9 +1,9 @@
 import pygame
-import pypulous.populous
+import populous
 # from Buildings import House
-from pypulous.objects import PopObject
-from pypulous.lib.random import getRandom, getRandomPercent
-from pypulous.lib.logger import log
+from objects import PopObject
+from lib.random import getRandom, getRandomPercent
+from lib.logger import log
 
 class Native(PopObject):
 	def __init__ (self, world, x=0, y=0, team=None):

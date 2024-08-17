@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # Native populous imports
 #from populous import *
-import pypulous.populous
+import populous
 # from Buildings import House 
 
 # Externl modules

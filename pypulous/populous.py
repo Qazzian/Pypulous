@@ -6,12 +6,12 @@
 # dictionaries of PopObject's should use the object id as the key name
 
 # Native populous imports
-from pypulous.objects import *
-from pypulous.team import *
-from pypulous.Native import Native
-from pypulous.Buildings import House
-from pypulous.lib.random import getRandom
-from pypulous.lib.logger import log
+from objects import *
+from team import *
+from Native import Native
+from Buildings import House
+from lib.random import getRandom
+from lib.logger import log
 
 # External modules
 import math

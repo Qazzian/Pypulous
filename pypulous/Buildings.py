@@ -1,7 +1,7 @@
-from pypulous.objects import PopObject
-from pypulous.Native import Native
-from pypulous.lib.random import getRandom
-from pypulous.lib.logger import log
+from objects import PopObject
+from Native import Native
+from lib.random import getRandom
+from lib.logger import log
 
 class House(PopObject):
 	def __init__ (self, world, x=0, y=0, team=None):
