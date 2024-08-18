@@ -1,9 +1,9 @@
 import pygame
-import populous
+from pypulous.GridSqr import GridSqr
 # from Buildings import House
-from objects import PopObject
-from lib.random import getRandom, getRandomPercent
-from lib.logger import log
+from pypulous.objects import PopObject
+from pypulous.lib.random import getRandom, getRandomPercent
+from pypulous.lib.logger import log
 
 class Native(PopObject):
 	def __init__ (self, world, x=0, y=0, team=None):
@@ -74,7 +74,7 @@ class Native(PopObject):
 			if not self.goal.is_alive:
 				#log( "Goal has died")
 				return False
-		if isinstance(self.goal, populous.GridSqr):
+		if isinstance(self.goal, GridSqr):
 			if not self.goal.isBuildable():
 				#log( "Goal no longer buildable")
 				return False
@@ -111,7 +111,7 @@ class Native(PopObject):
 			else:
 				self.state = 'fighting'
 				self.attack(self.goal)
-		elif isinstance(self.goal, populous.GridSqr):
+		elif isinstance(self.goal, GridSqr):
 			if self.team_goal == 'build':
 				self.state = 'building'
 				self.build()
@@ -134,7 +134,7 @@ class Native(PopObject):
 
 	def findNearestEmptyLand(self):
 		def matchBuildableLand(pos):
-			if isinstance(pos, populous.GridSqr):
+			if isinstance(pos, GridSqr):
 				return pos.isBuildable()
 		return self.world.findNearestPosFromFunction(self, matchBuildableLand)
 

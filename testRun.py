@@ -1,7 +1,11 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
-import populous
-import gui
+from pypulous.Buildings import House
+from pypulous.Native import Native
+from pypulous.lib.logger import log
+from pypulous.objects import Idol
+from pypulous.populous import Populous
+from pypulous.gui import Gui
 import unittest
 import random
 import time
@@ -23,7 +27,7 @@ class Game:
 		self.loadConfig()
 		self.init_game()
 		self.clock = pygame.time.Clock()
-		self.gui = gui.Gui(self.pop)
+		self.gui = Gui(self.pop)
 		self.populate_world()
 
 	def loadConfig(self):
@@ -34,7 +38,7 @@ class Game:
 			}
 
 	def init_game(self, width=None, height=None):
-		self.pop = populous.Populous()
+		self.pop = Populous()
 		self.pop.world_width = width or self.config['width']
 		self.pop.world_height = height or self.config['height']
 		self.pop.startGame()
@@ -61,13 +65,13 @@ class Game:
 		world = self.pop.world
 		team1 = self.pop.teams[1]
 		team2 = self.pop.teams[2]
-		man1 = populous.Native(world, 1, 0, team1)
-		home1 = populous.House(world, 0, 0, team1)
-		idol1 = populous.Idol(world, 2, 0, team1)
+		man1 = Native(world, 1, 0, team1)
+		home1 = House(world, 0, 0, team1)
+		idol1 = Idol(world, 2, 0, team1)
 		# Team 2
-		man2 = populous.Native(world, 1, 2, team2)
-		home2 = populous.House(world, 0, 2, team2)
-		idol2 = populous.Idol(world, 2, 2, team2)
+		man2 = Native(world, 1, 2, team2)
+		home2 = House(world, 0, 2, team2)
+		idol2 = Idol(world, 2, 2, team2)
 		return (man1, home1, idol1) , (man2, home2, idol2)
 
 
@@ -151,10 +155,10 @@ class Game:
 		print( "\n\nTeam \"%(team)s\" has won!\n\n" % {'team':self.winner})
 		if self.winner == None:
 			for t in self.pop.teams:
-				populous.log(t, "Has: ")
+				log(t, "Has: ")
 				for i, o in t.objects.items():
 					str = "%s %s" % (o, (o.is_alive and 'alive') or 'dead')# TODO
-					populous.log(str)
+					log(str)
 
 
 

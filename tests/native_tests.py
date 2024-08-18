@@ -3,13 +3,11 @@
 
 # test.object_tests.py
 
-import tests.poptest
-
 import unittest
 import random
 import time
 
-from pypulous import Native
+from pypulous.Native import Native
 from pypulous.populous import Populous
 from pypulous.Buildings import House
 

@@ -51,7 +51,7 @@ class HouseTest(unittest.TestCase):
 			house.act()
 			obj_no2 = len(self.world.objects)
 			#print obj_no2, ':', house.growth
-		self.assertTrue(True, "House doesn't know ow to act.")
+		self.assertTrue(True, "House doesn't know how to act.")
 
 	def testFight(self):
 		house = House(self.world, team=self.teams[0])

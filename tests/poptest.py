@@ -6,6 +6,7 @@
 import unittest
 
 import sys
+from tests import game_tests, gui_tests, house_tests, native_tests, object_tests, team_tests, world_tests
 
 class ProveSuite(unittest.TestSuite):
 	def __init__(self, tests=(), name=None):

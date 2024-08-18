@@ -4,8 +4,8 @@
 import os
 import sys, pygame
 from pathlib import Path
-import populous
-import objects
+from  pypulous.populous import Populous
+import pypulous.objects
 pygame.init()
 
 """
@@ -81,7 +81,7 @@ class Gui():
 
 if __name__ == '__main__':
 	import objects
-	game = populous.Populous()
+	game = Populous()
 	game.startGame()
 	world = game.world
 	man = objects.Native(world, 1, 1)

@@ -3,13 +3,13 @@
 
 # test.poptest.py
 
-import tests.poptest
+# import tests.poptest
 
 import unittest
 import random
 import time
 
-from pypulous import populous
+from pypulous.populous import Populous
 
 ############
 # Populous #
@@ -17,11 +17,11 @@ from pypulous import populous
 
 class PopulousTest(unittest.TestCase):
 	def testNew(self):
-		game = populous.Populous()
+		game = Populous()
 		self.assertTrue(game)
 
 	def testStartGame(self):
-		game = populous.Populous()
+		game = Populous()
 		game.startGame()
 		self.assertEqual(len(game.teams), 3, "Default team count.")
 		self.assertTrue(game.world, "No World")

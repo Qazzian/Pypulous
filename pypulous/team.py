@@ -1,5 +1,6 @@
 # Native populous imports
-from objects import *
+from pypulous.objects import *
+from pypulous.lib.logger import log
 
 # External modules
 import random
@@ -71,17 +72,17 @@ class Team:
 		return
 
 	def removeObject(self, id):
-		populous.log(self, "is Removing ",id)
+		log(self, "is Removing ",id)
 		obj = self.objects.pop(id)
 		if (obj.type == "Native"):
-			populous.log("Removing a native")
+			log("Removing a native")
 			self.natives.pop(id)
 			if obj.is_knight:
 				self.knights.pop(id)
 			elif obj.is_leader:
 				self.removeLeader(obj)
 		elif (obj.type == "House"):
-			populous.log("Removing a house")
+			log("Removing a house")
 			self.homes.pop(id)
 		obj.team = None
 

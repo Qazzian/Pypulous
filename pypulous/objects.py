@@ -1,12 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
-# Native populous imports
-#from populous import *
-import populous
-# from Buildings import House 
 
-# Externl modules
-import random
+from pypulous.lib.logger import log
 
 class PopObject:
 	file_name = ''
@@ -26,7 +21,7 @@ class PopObject:
 		if team != None:
 			team.addObject(self)
 		else:
-			populous.log( "Created an object without a team.", self)
+			log( "Created an object without a team.", self)
 			raise Exception('no team')
 		self.file_name = ''
 		self.state = None
@@ -45,7 +40,7 @@ class PopObject:
 		self.is_alive = False
 		self.killed_by = cause or self.state
 		self.state = 'dead'
-		populous.log(( self, "killed by ", cause))
+		log(( self, "killed by ", cause))
 
 	def isEnemy(self, other):
 		if isinstance(other, PopObject):
@@ -66,7 +61,7 @@ class Idol(PopObject):
 
 	def join(self, newLeader):
 		if self.x == newLeader.x and self.y == newLeader.y:
-			populous.log( "Idol.join ", newLeader, "\n")
+			log( "Idol.join ", newLeader, "\n")
 			self.team.setLeader(newLeader)
 
 	def isEnemy(self, other):
